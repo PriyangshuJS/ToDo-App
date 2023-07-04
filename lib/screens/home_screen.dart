@@ -3,6 +3,7 @@ import 'package:todo/utils/colors.dart';
 import 'package:todo/widgets/task_tile.dart';
 
 import '../widgets/catagory.dart';
+import '../widgets/overview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -39,25 +40,19 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black),
-                height: MediaQuery.of(context).size.height / 3,
-                width: double.infinity,
-                margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+              OverviewTile(
+                date: 'Today',
+                title: "Today's Tasks",
+                taskDone: 10,
+                totalTask: 12,
+                percentageDone: 82,
               ),
               const SizedBox(height: 20),
-              CatagoryTile(title: "Ongoing"),
+              CatagoryTile(title: "Ongoing", taskNo: 5),
               TaskTile(taskName: "HomeWork", date: "Today"),
-              // Divider(
-              //   height: MediaQuery.of(context).size.width / 2,
-              //   color: Colors.grey,
-              // ),
               TaskTile(taskName: "HomeWork", date: "Yesterday"),
               const SizedBox(height: 20),
-              CatagoryTile(title: "Completed"),
+              CatagoryTile(title: "Completed", taskNo: 10),
               TaskTile(taskName: "Sleep", date: DateTime.now().toString()),
             ],
           ),

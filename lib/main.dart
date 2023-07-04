@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/home_screen.dart';
+import 'package:todo/screens/login_screeen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

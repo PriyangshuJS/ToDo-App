@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class CatagoryTile extends StatelessWidget {
   String title;
-  CatagoryTile({super.key, required this.title});
+  int taskNo;
+  CatagoryTile({super.key, required this.title, required this.taskNo});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(left: 20),
+        margin: const EdgeInsets.only(left: 20),
         child: Row(
           children: [
             Text(
@@ -17,6 +18,17 @@ class CatagoryTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Container(
+              alignment: AlignmentDirectional.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 207, 205, 205),
+              ),
+              height: 25,
+              width: 35,
+              margin: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(taskNo.toString()),
+            )
           ],
         ));
   }

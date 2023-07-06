@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/screens/new_task.dart';
 import 'package:todo/utils/colors.dart';
 import 'package:todo/widgets/task_tile.dart';
 
@@ -13,9 +14,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  void newtaskAdd(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.blueGrey,
+      context: context,
+      builder: (_) {
+        return NewTask();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blueGrey,
+          onPressed: () => newtaskAdd(context),
+          child: const Icon(Icons.add),
+        ),
         backgroundColor: mobileBackgroundColor,
         appBar: AppBar(
           backgroundColor: mobileBackgroundColor,

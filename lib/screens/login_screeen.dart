@@ -34,11 +34,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 40),
                   const Text(
-                    "Manage",
-                    style: TextStyle(color: Colors.black, fontSize: 60),
-                  ),
-                  const Text(
-                    "your",
+                    "Manage\nyour",
                     style: TextStyle(color: Colors.black, fontSize: 60),
                   ),
                   const Align(

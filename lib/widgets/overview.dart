@@ -29,7 +29,7 @@ class OverviewTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              date,
+              " $date",
               style: const TextStyle(fontSize: 15, color: Colors.grey),
             ),
             Text(

@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int screen = 1;
   void newtaskAdd(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: Colors.blueGrey,
@@ -35,20 +36,56 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: mobileBackgroundColor,
         appBar: AppBar(
           backgroundColor: mobileBackgroundColor,
-          title: Text(
-            "Hi Usename",
+          title: const Text(
+            "Good Morning",
             // style: TextStyle(color: Colors.black),
           ),
-          actions: const [
-            InkWell(
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_1280.png"),
-                  radius: 20,
-                ),
+          actions: [
+            IconButton(
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    backgroundColor: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: EdgeInsets.zero,
+                    content: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.7, // Adjust the width as needed
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                screen = 1;
+                              });
+                              Navigator.pop(context);
+                            },
+                            child: ListTile(
+                              title: Text("Today's List"),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                screen = 2;
+                              });
+                              Navigator.pop(context);
+                            },
+                            child: ListTile(
+                              title: Text("ToDo List"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
+              icon: const Icon(Icons.more_vert),
             )
           ],
         ),
@@ -56,13 +93,20 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              OverviewTile(
-                date: 'Today',
-                title: "Today's Tasks",
-                taskDone: 10,
-                totalTask: 12,
-                percentageDone: 82,
-              ),
+              screen == 1
+                  ? OverviewTile(
+                      date: 'Today',
+                      title: "Today's Tasks",
+                      taskDone: 10,
+                      totalTask: 12,
+                      percentageDone: 82,
+                    )
+                  : OverviewTile(
+                      date: "Day's Date",
+                      title: "Task List",
+                      taskDone: 50,
+                      totalTask: 60,
+                      percentageDone: 85),
               const SizedBox(height: 20),
               CatagoryTile(title: "Ongoing", taskNo: 5),
               TaskTile(taskName: "HomeWork", date: "Today"),

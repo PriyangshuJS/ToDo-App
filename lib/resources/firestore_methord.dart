@@ -8,6 +8,7 @@ class FirestoreMethord {
     String title,
     String dueDate,
     String priority,
+    bool status,
   ) async {
     try {
       Post post = Post(
@@ -15,6 +16,7 @@ class FirestoreMethord {
         title: title,
         dueDate: dueDate,
         priority: priority,
+        status: status,
       );
       await taskData.collection(catagory).add(post.toJson());
     } catch (err) {

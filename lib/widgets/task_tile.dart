@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class TaskTile extends StatelessWidget {
-  String taskName;
-  String date;
-  TaskTile({super.key, required this.taskName, required this.date});
+class TaskTile extends StatefulWidget {
+  final dynamic snap;
+  const TaskTile({super.key, required this.snap});
 
+  @override
+  State<TaskTile> createState() => _TaskTileState();
+}
+
+class _TaskTileState extends State<TaskTile> {
+  bool complete = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,7 +20,16 @@ class TaskTile extends StatelessWidget {
           width: double.infinity,
           child: ListTile(
             leading: InkWell(
-              onTap: () {},
+              onTap: () {
+                setState(() {
+                  complete = true;
+                });
+              },
+              onDoubleTap: () {
+                setState(() {
+                  complete = false;
+                });
+              },
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -24,15 +38,43 @@ class TaskTile extends StatelessWidget {
                 ),
                 height: 30,
                 width: 30,
+                child: complete ? const Icon(Icons.check) : null,
               ),
             ),
             title: Text(
-              taskName,
+              widget.snap["title"],
               style: const TextStyle(fontSize: 15),
             ),
-            subtitle: Text(date),
-            trailing:
-                const IconButton(onPressed: null, icon: Icon(Icons.more_horiz)),
+            subtitle: Text(widget.snap["dueDate"]),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Delete Confirmation'),
+                      content: const Text('Are you sure you want to delete?'),
+                      actions: [
+                        TextButton(
+                          child: const Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        ElevatedButton(
+                          child: const Text('Delete'),
+                          onPressed: () {
+                            // Perform delete operation here
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
         Padding(

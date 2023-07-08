@@ -5,18 +5,18 @@ class OverviewTile extends StatelessWidget {
   String title;
   int taskDone;
   int totalTask;
-  int percentageDone;
+
   OverviewTile({
     super.key,
     required this.date,
     required this.taskDone,
     required this.title,
     required this.totalTask,
-    required this.percentageDone,
   });
 
   @override
   Widget build(BuildContext context) {
+    int percentageDone = ((taskDone / totalTask) * 100).toInt();
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -49,16 +49,37 @@ class OverviewTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 167, 165, 165),
-                    width: 3,
-                  )),
+            SizedBox(
               height: 50,
-              margin: const EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.blueGrey,
+                        width: 3,
+                      ),
+                    ),
+                    margin: const EdgeInsets.only(top: 10),
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: taskDone / totalTask,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.blueGrey,
+                          border: Border.all(
+                            color: Colors.blueGrey,
+                            width: 3,
+                          )),
+                      margin: const EdgeInsets.only(top: 10),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),

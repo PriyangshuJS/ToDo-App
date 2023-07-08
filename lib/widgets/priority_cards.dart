@@ -11,8 +11,17 @@ class PriorityCard extends StatelessWidget {
       height: 50,
       width: 50,
       child: Card(
-        color: colour,
-        child: Align(alignment: Alignment.center, child: Text(pro)),
+        color: Colors.white,
+        child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              pro,
+              style: TextStyle(
+                color: colour,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
       ),
     );
   }

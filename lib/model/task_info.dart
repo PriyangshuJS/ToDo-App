@@ -17,5 +17,6 @@ class Post {
         "title": title,
         "dueDate": dueDate,
         "priority": priority,
+        "status": status
       };
 }

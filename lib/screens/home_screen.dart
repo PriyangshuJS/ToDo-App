@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/resources/firestore_methord.dart';
 import 'package:todo/screens/new_task.dart';
 import 'package:todo/utils/colors.dart';
 import 'package:todo/widgets/task_tile.dart';
@@ -47,7 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.blueGrey,
       context: context,
       builder: (_) {
-        return NewTask();
+        return Container(
+            margin: const EdgeInsets.all(20),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: NewTask());
       },
     );
   }
@@ -135,13 +140,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? OverviewTile(
                                       date: 'Today',
                                       title: "Today's Tasks",
-                                      taskDone: 1,
                                       totalTask: snapshot.data!.docs.length,
                                     )
                                   : OverviewTile(
                                       date: "Day's Date",
                                       title: "Task List",
-                                      taskDone: 50,
                                       totalTask: 60,
                                     ),
                               const SizedBox(height: 20),

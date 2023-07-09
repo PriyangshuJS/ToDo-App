@@ -39,102 +39,97 @@ class _NewTaskState extends State<NewTask> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(20),
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: ListView(
-        children: [
-          const SizedBox(height: 30),
-          const Text(
+    return ListView(
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 20, top: 10),
+          child: Text(
             "Enter your \ntask details",
             style: TextStyle(color: Colors.black, fontSize: 30),
           ),
-          Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    controller: taskNameController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter task',
-                      contentPadding: EdgeInsets.all(8),
+        ),
+        Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: taskNameController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter task',
+                    contentPadding: EdgeInsets.all(8),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a task';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: taskDeadlineController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter task deadline',
+                    contentPadding: EdgeInsets.all(8),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a task deadline';
+                    }
+                    return null;
+                  },
+                ),
+                const Text(
+                  "\n\nChoose Priority!\n",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        priority = "top";
+                      },
+                      child: PriorityCard(pro: "T", colour: Colors.deepPurple),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a task';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: taskDeadlineController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter task deadline',
-                      contentPadding: EdgeInsets.all(8),
+                    InkWell(
+                      onTap: () {
+                        priority = "High";
+                      },
+                      child: PriorityCard(pro: "H", colour: Colors.red),
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a task deadline';
-                      }
-                      return null;
-                    },
-                  ),
-                  const Text(
-                    "\n\nChoose Priority!\n",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          priority = "top";
-                        },
-                        child:
-                            PriorityCard(pro: "T", colour: Colors.deepPurple),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          priority = "High";
-                        },
-                        child: PriorityCard(pro: "H", colour: Colors.red),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          priority = "Medium";
-                        },
-                        child: PriorityCard(pro: "M", colour: Colors.green),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          priority = "Low";
-                        },
-                        child:
-                            PriorityCard(pro: "L", colour: Colors.greenAccent),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 35),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Card(
-                      child: TextButton(
-                        onPressed: addTask,
-                        child: const Text("Add"),
-                      ),
+                    InkWell(
+                      onTap: () {
+                        priority = "Medium";
+                      },
+                      child: PriorityCard(pro: "M", colour: Colors.green),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        priority = "Low";
+                      },
+                      child: PriorityCard(pro: "L", colour: Colors.greenAccent),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 35),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Card(
+                    child: TextButton(
+                      onPressed: addTask,
+                      child: const Text("Add"),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

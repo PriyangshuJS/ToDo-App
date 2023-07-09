@@ -1,4 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/widgets/overview.dart';
+
+import '../resources/firestore_methord.dart';
 
 class TaskTile extends StatefulWidget {
   final dynamic snap;
@@ -23,11 +27,15 @@ class _TaskTileState extends State<TaskTile> {
               onTap: () {
                 setState(() {
                   complete = true;
+                  FirestoreMethord().updateStatus(
+                      widget.snap["catagory"], widget.snap["docId"], complete);
                 });
               },
               onDoubleTap: () {
                 setState(() {
                   complete = false;
+                  FirestoreMethord().updateStatus(
+                      widget.snap["catagory"], widget.snap["docId"], complete);
                 });
               },
               child: Container(
@@ -65,7 +73,8 @@ class _TaskTileState extends State<TaskTile> {
                         ElevatedButton(
                           child: const Text('Delete'),
                           onPressed: () {
-                            // Perform delete operation here
+                            FirestoreMethord().deleteTask(
+                                widget.snap["catagory"], widget.snap["docId"]);
                             Navigator.of(context).pop();
                           },
                         ),

@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:todo/resources/firestore_methord.dart';
 
-class OverviewTile extends StatelessWidget {
+class OverviewTile extends StatefulWidget {
   String date;
   String title;
-  int taskDone;
   int totalTask;
 
   OverviewTile({
     super.key,
     required this.date,
-    required this.taskDone,
     required this.title,
     required this.totalTask,
   });
 
   @override
+  State<OverviewTile> createState() => _OverviewTileState();
+}
+
+class _OverviewTileState extends State<OverviewTile> {
+  @override
   Widget build(BuildContext context) {
-    int percentageDone = ((taskDone / totalTask) * 100).toInt();
+    int taskDone = 0;
+
+    Future<void> taskDoneFunc() async {
+      setState(() async {
+        taskDone = await FirestoreMethord().completeTaskCount("Today");
+      });
+      print("-----------------$taskDone");
+    }
+
+    int percentageDone = widget.totalTask != 0
+        ? ((taskDone / widget.totalTask) * 100).toInt()
+        : 0;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -29,16 +45,16 @@ class OverviewTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              " $date",
+              " ${widget.date}",
               style: const TextStyle(fontSize: 15, color: Colors.grey),
             ),
             Text(
-              title,
+              widget.title,
               style: const TextStyle(fontSize: 22, color: Colors.white),
             ),
             const SizedBox(height: 70),
             Text(
-              "$taskDone/$totalTask Tasks",
+              "$taskDone/${widget.totalTask} Tasks",
               style: const TextStyle(fontSize: 15, color: Colors.grey),
             ),
             Text(
@@ -66,7 +82,8 @@ class OverviewTile extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 10),
                   ),
                   FractionallySizedBox(
-                    widthFactor: taskDone / totalTask,
+                    widthFactor:
+                        widget.totalTask != 0 ? taskDone / widget.totalTask : 0,
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),

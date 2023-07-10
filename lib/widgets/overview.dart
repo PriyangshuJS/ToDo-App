@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:todo/resources/firestore_methord.dart';
 
 class OverviewTile extends StatefulWidget {
   String date;
   String title;
+  int taskDone;
   int totalTask;
 
   OverviewTile({
     super.key,
     required this.date,
     required this.title,
+    required this.taskDone,
     required this.totalTask,
   });
 
@@ -20,17 +21,8 @@ class OverviewTile extends StatefulWidget {
 class _OverviewTileState extends State<OverviewTile> {
   @override
   Widget build(BuildContext context) {
-    int taskDone = 0;
-
-    Future<void> taskDoneFunc() async {
-      setState(() async {
-        taskDone = await FirestoreMethord().completeTaskCount("Today");
-      });
-      print("-----------------$taskDone");
-    }
-
     int percentageDone = widget.totalTask != 0
-        ? ((taskDone / widget.totalTask) * 100).toInt()
+        ? ((widget.taskDone / widget.totalTask) * 100).toInt()
         : 0;
 
     return Container(
@@ -54,7 +46,7 @@ class _OverviewTileState extends State<OverviewTile> {
             ),
             const SizedBox(height: 70),
             Text(
-              "$taskDone/${widget.totalTask} Tasks",
+              "${widget.taskDone}/${widget.totalTask} Tasks",
               style: const TextStyle(fontSize: 15, color: Colors.grey),
             ),
             Text(
@@ -82,8 +74,9 @@ class _OverviewTileState extends State<OverviewTile> {
                     margin: const EdgeInsets.only(top: 10),
                   ),
                   FractionallySizedBox(
-                    widthFactor:
-                        widget.totalTask != 0 ? taskDone / widget.totalTask : 0,
+                    widthFactor: widget.totalTask != 0
+                        ? widget.taskDone / widget.totalTask
+                        : 0,
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),

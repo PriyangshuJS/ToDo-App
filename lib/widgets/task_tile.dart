@@ -46,7 +46,7 @@ class _TaskTileState extends State<TaskTile> {
                 ),
                 height: 30,
                 width: 30,
-                child: complete ? const Icon(Icons.check) : null,
+                child: widget.snap["status"] ? const Icon(Icons.check) : null,
               ),
             ),
             title: Text(

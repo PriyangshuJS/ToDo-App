@@ -1,7 +1,7 @@
 class Post {
   final String catagory;
   final String title;
-  final String dueDate;
+  final DateTime dueDate;
   final String priority;
   final bool status;
 

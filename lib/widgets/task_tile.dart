@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo/widgets/overview.dart';
 
 import '../resources/firestore_methord.dart';
@@ -53,7 +54,9 @@ class _TaskTileState extends State<TaskTile> {
               widget.snap["title"],
               style: const TextStyle(fontSize: 15),
             ),
-            subtitle: Text(widget.snap["dueDate"]),
+            subtitle: Text(
+              DateFormat.yMd().format(widget.snap["dueDate"].toDate()),
+            ),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {

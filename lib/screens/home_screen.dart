@@ -100,9 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -149,77 +149,65 @@ class _HomeScreenState extends State<HomeScreen> {
                               completedTasks.add(doc);
                             }
                           }
-                          return Column(
-                            children: [
-                              screen == 1
-                                  ? OverviewTile(
-                                      date: 'Today',
-                                      title: "Today's Tasks",
-                                      taskDone: completedTasks.length,
-                                      totalTask: snapshot.data!.docs.length,
-                                    )
-                                  : OverviewTile(
-                                      date: "Day's Date",
-                                      title: "Task List",
-                                      taskDone: 50,
-                                      totalTask: 60,
-                                    ),
-                              const SizedBox(height: 20),
-                              CatagoryTile(
-                                  title: "Ongoing",
-                                  taskNo: ongoingTasks.length),
-                              ongoingTasks.isNotEmpty
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: ongoingTasks.length,
-                                      itemBuilder: (context, index) {
-                                        return TaskTile(
-                                            snap: ongoingTasks[index].data());
-                                      },
-                                    )
-                                  : Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 20, left: 40, bottom: 20),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Works Done! Chill now..",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey,
-                                            fontStyle: FontStyle.italic,
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                screen == 1
+                                    ? OverviewTile(
+                                        date: 'Today',
+                                        title: "Today's Tasks",
+                                        taskDone: completedTasks.length,
+                                        totalTask: snapshot.data!.docs.length,
+                                      )
+                                    : OverviewTile(
+                                        date: "Day's Date",
+                                        title: "Task List",
+                                        taskDone: 50,
+                                        totalTask: 60,
+                                      ),
+                                const SizedBox(height: 20),
+                                CatagoryTile(
+                                    title: "Ongoing",
+                                    taskNo: ongoingTasks.length),
+                                ongoingTasks.isNotEmpty
+                                    ? ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: ongoingTasks.length,
+                                        itemBuilder: (context, index) {
+                                          return TaskTile(
+                                              snap: ongoingTasks[index].data());
+                                        },
+                                      )
+                                    : const Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 20, left: 40, bottom: 20),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "No Done! Chill now..",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey,
+                                              fontStyle: FontStyle.italic,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                              CatagoryTile(
-                                  title: "Completed",
-                                  taskNo: completedTasks.length),
-                              completedTasks.isNotEmpty
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: completedTasks.length,
-                                      itemBuilder: (context, index) {
-                                        return TaskTile(
-                                            snap: completedTasks[index].data());
-                                      },
-                                    )
-                                  : Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 20, left: 40),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Do Some Work please!! ",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.grey,
-                                            fontStyle: FontStyle.italic,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                            ],
+                                completedTasks.isNotEmpty
+                                    ? CatagoryTile(
+                                        title: "Completed",
+                                        taskNo: completedTasks.length)
+                                    : const SizedBox(),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: completedTasks.length,
+                                  itemBuilder: (context, index) {
+                                    return TaskTile(
+                                        snap: completedTasks[index].data());
+                                  },
+                                )
+                              ],
+                            ),
                           );
 
                         case ConnectionState.done:

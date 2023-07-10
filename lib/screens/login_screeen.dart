@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 90,
+                    height: 50,
                   ),
                   Row(
                     children: [
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         icon: const Icon(
                           Icons.arrow_circle_right_rounded,
-                          size: 50,
+                          size: 80,
                           color: Colors.grey,
                         ),
                       ),

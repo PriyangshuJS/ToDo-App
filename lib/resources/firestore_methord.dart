@@ -6,7 +6,7 @@ class FirestoreMethord {
   Future<void> uploadTask(
     String catagory,
     String title,
-    String dueDate,
+    DateTime dueDate,
     String priority,
     bool status,
   ) async {

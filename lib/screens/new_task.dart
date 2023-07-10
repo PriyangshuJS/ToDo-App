@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo/resources/firestore_methord.dart';
 import 'package:todo/widgets/priority_cards.dart';
 
 class NewTask extends StatefulWidget {
-  NewTask({Key? key}) : super(key: key);
+  const NewTask({Key? key}) : super(key: key);
 
   @override
   State<NewTask> createState() => _NewTaskState();
@@ -12,24 +13,40 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController taskNameController = TextEditingController();
-  final TextEditingController taskDeadlineController = TextEditingController();
-
+  DateTime? taskDeadline;
   String priority = "";
   bool status = false;
+
+  void datepicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    ).then((datepicked) {
+      if (datepicked == null) {
+        return;
+      }
+      setState(() {
+        taskDeadline = datepicked;
+      });
+    });
+  }
 
   @override
   void dispose() {
     taskNameController.dispose();
-    taskDeadlineController.dispose();
+
     super.dispose();
   }
 
   void addTask() {
     if (_formKey.currentState!.validate()) {
+      final DateTime deadline = taskDeadline ?? DateTime.now();
       FirestoreMethord().uploadTask(
         "Today",
         taskNameController.text,
-        taskDeadlineController.text,
+        deadline,
         priority,
         status,
       );
@@ -68,19 +85,27 @@ class _NewTaskState extends State<NewTask> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: taskDeadlineController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter task deadline',
-                    contentPadding: EdgeInsets.all(8),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a task deadline';
-                    }
-                    return null;
-                  },
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        taskDeadline == null
+                            ? "Enter Dead-Line - !"
+                            : "Dead-Line - : ${DateFormat.yMd().format(taskDeadline!)}",
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: datepicker,
+                      child: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    ),
+                  ],
                 ),
                 const Text(
                   "\n\nChoose Priority!\n",
@@ -115,7 +140,7 @@ class _NewTaskState extends State<NewTask> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 35),
+                const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Card(
